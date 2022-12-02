@@ -21,7 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "json-server": "json-server __json_server_mock__/db.json --watch",
+    "mock": "json-server __json_server_mock__/db.json --port 3004",
     "prepare": "husky install"
   },
   "eslintConfig": {

@@ -3,7 +3,7 @@ import { List } from "./list"
 import { SearchPanel } from "./search-panel"
 import {  useEffect, useState } from 'react'
 
-const apiUrl = "http://localhost:3001"
+const apiUrl = "http://localhost:3004"
 
 export const ProjectListScreen = ()=>{
   const [param,setParm] = useState({
@@ -18,7 +18,7 @@ export const ProjectListScreen = ()=>{
   useEffect(() =>{
     fetch(`${apiUrl}/projects`).then(async response =>{
       if(response.ok){//如果请求成功,保存项目列表数据
-        setList(await response.json)
+        setList(await response.json())
       }
     }) 
   },[param])//当param改变时获取
@@ -27,7 +27,7 @@ export const ProjectListScreen = ()=>{
   useEffect(()=>{
     fetch(`${apiUrl}/users`).then(async response =>{
       if(response.ok){//如果请求成功,保存项目列表数据
-        setUsers(await response.json)
+        setUsers(await response.json())
       }
     }) 
   },[])//只初始化一次
