@@ -2,6 +2,8 @@ import React from "react"
 import { List } from "./list"
 import { SearchPanel } from "./search-panel"
 import {  useEffect, useState } from 'react'
+import { clearnObject } from "../../utils"
+import * as qs from "qs"
 
 const apiUrl = "http://localhost:3004"
 
@@ -10,13 +12,14 @@ export const ProjectListScreen = ()=>{
     name:'',
     personId:''
   })
-
+  
   const [users,setUsers] = useState([])
 
   const [list,setList] = useState([])
-  // 获取项目列表接口的代码
+  // 获取项目列表接口
   useEffect(() =>{
-    fetch(`${apiUrl}/projects`).then(async response =>{
+
+    fetch(`${apiUrl}/projects?${qs.stringify(clearnObject(param))}`).then(async response =>{
       if(response.ok){//如果请求成功,保存项目列表数据
         setList(await response.json())
       }

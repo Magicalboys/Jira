@@ -2,7 +2,7 @@ import React from "react"
 import { setMaxListeners } from 'events';
 export const SearchPanel = ({users,param,setParm})=>{
 
-  return <from>
+  return <form>
     <div>
       <input type="text" value={param.name} 
         onChange ={e =>setParm({...param,name:e.target.value})} />
@@ -10,9 +10,9 @@ export const SearchPanel = ({users,param,setParm})=>{
         onChange ={e =>setParm({...param,personId:e.target.value})}>
           <option value={""}>负责人</option>
           {
-            users.map(user => <option value={user.id}>{user.name}</option>)
+            users.map(user => <option key={user.id} value={user.id}>{user.name}</option>)
           }
       </select>
     </div>
-  </from>
+  </form>
 }
