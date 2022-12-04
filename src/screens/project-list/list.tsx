@@ -1,5 +1,6 @@
 import React from "react"
 import { User } from "./search-panel";
+// Project 的接口类型
 interface Project{
   id:string;
   name:string;
