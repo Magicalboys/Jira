@@ -9,7 +9,7 @@ import { useMount } from './../../utils/index';
 const apiUrl = "http://localhost:3004"
 
 export const ProjectListScreen = () => {
-  const [param, setParm] = useState({
+  const [param, setParam] = useState({
     name: '',
     personId: ''
   })
@@ -38,7 +38,7 @@ export const ProjectListScreen = () => {
   })//只初始化一次
 
   return <div>
-    <SearchPanel users={users} param={param} setParm={setParm} />
+    <SearchPanel users={users} param={param} setParam={setParam} />
     <List users={users} list={list} />
   </div>
 }

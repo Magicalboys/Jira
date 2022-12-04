@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 //1. 清除空对象
 
 // 考虑 value 等于0的情况，!!value 意思是将value转化成布尔值
-export const isNull = (value) =>value === 0 ? false : !value
+export const isNull = (value:any) =>value === 0 ? false : !value
 
 // 在一个函数中，改变传入对象本身是不好的
-export const clearnObject = (object) =>{
+export const clearnObject = (object:object) =>{
   const result = {...object}// 将传入的对象进行浅拷贝
   Object.keys(result).forEach(keys =>{
     const value  = result[keys]
@@ -19,14 +19,14 @@ export const clearnObject = (object) =>{
 }
 
 // 2.初始化users
-export const useMount = (callback) =>{
+export const useMount = (callback:() => void) =>{
   useEffect(() => {
     callback()
   },[])
 }
 
 //3.通过自定义hook实现Debounce
-export const useDebounce = (value,delay) =>{
+export const useDebounce = (value:any,delay?:number) =>{
   // 为value 设置一个新的状态，改变其更新频率
   const [deboucedValue,setDebouncedValue] = useState(value)
 

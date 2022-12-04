@@ -1,5 +1,18 @@
 import React from "react"
-export const List = ({list,users})=>{
+import { User } from "./search-panel";
+interface Project{
+  id:string;
+  name:string;
+  personId:string;
+  pin:boolean;
+  organization:string;
+}
+
+interface ListProps{
+  list:Project[],
+  users:User[]
+}
+export const List = ({list,users}:ListProps)=>{
   return <table>
 
     {/* <tr> 标签必须被在 <tbody>或<thead> 嵌套,不能直接作为 <table>的子元素 */}
