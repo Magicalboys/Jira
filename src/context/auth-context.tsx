@@ -1,27 +1,14 @@
 import React, { useState } from "react";
 
-
 interface Authfrom {
-  username:string;
-  password:string;
+  username: string;
+  password: string;
 }
 
-const AuthContext = React.createContext(undefined)
+const AuthContext = React.createContext(undefined);
 
-AuthContext.displayName = 'AuthContext'
+AuthContext.displayName = "AuthContext";
 
-export const AuthProvider = ()=>{
-
-  const [user,setUser] = useState(null);
-
-
-}
-
-
-
-
-
-
-
-
-
+export const AuthProvider = () => {
+  const [user, setUser] = useState(null);
+};
