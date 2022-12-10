@@ -23,6 +23,7 @@ export const LoginScreen = () => {
     //获取填写的表单的数据
     const username = (event.currentTarget.elements[0] as HTMLInputElement)
       .value;
+
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
 

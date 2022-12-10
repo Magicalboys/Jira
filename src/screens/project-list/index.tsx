@@ -1,4 +1,5 @@
 import * as qs from "qs";
+// qs是一个用于解析和字符串化的工具库
 import React from "react";
 import { clearnObject, useDebounce } from "../../utils";
 import { List } from "./list";
@@ -13,6 +14,7 @@ export const ProjectListScreen = () => {
     name: "",
     personId: "",
   });
+
   const debouncedParam = useDebounce(param, 200);
 
   const [users, setUsers] = useState([]);
@@ -21,6 +23,7 @@ export const ProjectListScreen = () => {
   // 获取项目列表接口
   useEffect(() => {
     fetch(
+      // 通过qs库将对象转化为字符串
       `${apiUrl}/projects?${qs.stringify(clearnObject(debouncedParam))}`
     ).then(async (response) => {
       if (response.ok) {
