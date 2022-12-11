@@ -1,3 +1,4 @@
+import { Console } from "console";
 import { config } from "process";
 import qs from "qs";
 import React from "react";
@@ -23,7 +24,7 @@ export const http = async (
     // 表示默认为GET,如果customConfig传入的method的参数为POST时则会覆盖GET方法
     method: "GET",
     headers: {
-      Authorization: token ? `Bearer${token}` : "",
+      Authorization: token ? `Bearer ${token}` : "",
       "Content-Type": data ? "application/json" : "",
     },
     ...customConfig,
@@ -34,11 +35,12 @@ export const http = async (
   } else {
     config.body = JSON.stringify(data || {});
   }
+
   // axios 和 fetch 的表现不一样，axios 可以直接在返回状态不为2xx的时候抛出异常
   return window
     .fetch(`${apiUrl}/${endpoint}`, config)
     .then(async (response) => {
-      // 未登录 或者 token 失效的情况下
+      // TODO:未登录 或者 token 失效的情况下TODO:
       if (response.status === 401) {
         // 登出
         await auth.logout();

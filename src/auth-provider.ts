@@ -6,6 +6,7 @@ const localStorageKey = "__auth_provider_token__";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+// 从 localStorage 里面找到之前保存的 token
 export const getToken = () => window.localStorage.getItem(localStorageKey);
 
 // 将获取到的user对象中自动生成的 token 映射到到 localStorage 里面

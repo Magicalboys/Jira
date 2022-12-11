@@ -1,10 +1,10 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../context/auth-context";
 
-// 注册页面
+// TODO:注册页面
 
 export const RegisterScreen = () => {
-  // Context 来共享 login,user
+  // Context 来共享 register,user
   const { register, user } = useAuth();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
