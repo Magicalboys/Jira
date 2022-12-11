@@ -1,4 +1,5 @@
 import React from "react";
+import { Input, Select } from "antd";
 
 // 暴露 User 接口实现复用
 export interface User {
@@ -23,22 +24,29 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProp) => {
   return (
     <form>
       <div>
-        <input
+        <Input
           type="text"
           value={param.name}
           onChange={(e) => setParam({ ...param, name: e.target.value })}
         />
-        <select
+        <Select
           value={param.personId}
-          onChange={(e) => setParam({ ...param, personId: e.target.value })}
+          // 使用 antd 返回的对象需要 e.target.value 而直接是 value
+          onChange={(value) =>
+            setParam({
+              ...param,
+              personId: value,
+            })
+          }
         >
-          <option value={""}>负责人</option>
+          <Select.Option value={""}>负责人</Select.Option>
+
           {users.map((user) => (
-            <option key={user.id} value={user.id}>
+            <Select.Option key={user.id} value={user.id}>
               {user.name}
-            </option>
+            </Select.Option>
           ))}
-        </select>
+        </Select>
       </div>
     </form>
   );
