@@ -1,8 +1,5 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../context/auth-context";
-import { login } from "../auth-provider";
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 // 注册页面
 

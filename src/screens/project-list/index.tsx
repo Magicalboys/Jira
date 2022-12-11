@@ -6,8 +6,7 @@ import { List } from "./list";
 import { SearchPanel } from "./search-panel";
 import { useEffect, useState } from "react";
 import { useMount } from "./../../utils/index";
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import { useHttp } from "../../utils/http";
 
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
@@ -20,27 +19,16 @@ export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
 
   const [list, setList] = useState([]);
+
+  const client = useHttp();
   // 获取项目列表接口
   useEffect(() => {
-    fetch(
-      // 通过qs库将对象转化为字符串
-      `${apiUrl}/projects?${qs.stringify(clearnObject(debouncedParam))}`
-    ).then(async (response) => {
-      if (response.ok) {
-        //如果请求成功,保存项目列表数据
-        setList(await response.json());
-      }
-    });
+    client("projects", { data: clearnObject(debouncedParam) }).then(setList);
   }, [debouncedParam]); //当debouncedParam改变时获取
 
   //用自定义hook 来 初始化user
   useMount(() => {
-    fetch(`${apiUrl}/users`).then(async (response) => {
-      if (response.ok) {
-        //如果请求成功,保存项目列表数据
-        setUsers(await response.json());
-      }
-    });
+    client("users").then(setUsers);
   }); //只初始化一次
 
   return (
