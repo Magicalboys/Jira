@@ -14,9 +14,9 @@ export const handleUserResponse = ({ user }: { user: User }) => {
   return user;
 };
 
-// 将username和password都通过 fetch 传递给服务端 并且将user对象中自动生成的 token 存到 localStorage 里面
-export const login = (data: { username: string; passsword: string }) => {
-  fetch(`${apiUrl}/login`, {
+// 将username和password都通过 fetch 传递给服务端
+export const login = (data: { username: string; password: string }) => {
+  return fetch(`${apiUrl}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,13 +24,18 @@ export const login = (data: { username: string; passsword: string }) => {
     body: JSON.stringify(data),
   }).then(async (response) => {
     if (response.ok) {
+      ////当请求成功时 将user对象中自动生成的 token 存到 localStorage 里面,并返回 user对象
       return handleUserResponse(await response.json());
+    } else {
+      //当请求失败时，直接报错
+      return Promise.reject(data);
     }
   });
 };
 
-export const register = (data: { username: string; passsword: string }) => {
-  fetch(`${apiUrl}/register`, {
+// 将username和password都通过 fetch 传递给服务端
+export const register = (data: { username: string; password: string }) => {
+  return fetch(`${apiUrl}/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,9 +43,15 @@ export const register = (data: { username: string; passsword: string }) => {
     body: JSON.stringify(data),
   }).then(async (response) => {
     if (response.ok) {
+      //当请求成功时 将user对象中自动生成的 token 存到 localStorage 里面,并返回 user对象
       return handleUserResponse(await response.json());
+    } else {
+      //当请求失败时，直接报错
+      return Promise.reject(data);
     }
   });
 };
 
-export const logout = () => window.localStorage.removeItem(localStorageKey);
+// 退出登录 异步函数 是为了方便调用 then 方法
+export const logout = async () =>
+  window.localStorage.removeItem(localStorageKey);
