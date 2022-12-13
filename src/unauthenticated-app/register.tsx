@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import { FormBoxs, FormCard, MyInput } from "./index";
 import { OverlayProp } from "./overlay";
 import "../assets/css/index.css";
+import { MyButton } from "./login";
 
 // TODO:注册页面
 
@@ -22,7 +23,7 @@ export const RegisterScreen = ({ isShow, setIsShow }: OverlayProp) => {
       <Form onFinish={handleSubmit}>
         <RegisterForm className={isShow ? "none" : "RegisterForm"}>
           <FormCard>
-            <h2>REGISTER</h2>
+            <h2 style={{ color: "#257b5e" }}> REGISTER </h2>
             <Divider />
             <Form.Item
               name={"username"}
@@ -36,9 +37,9 @@ export const RegisterScreen = ({ isShow, setIsShow }: OverlayProp) => {
             >
               <MyInput placeholder={"密码"} type="password" id={"password"} />
             </Form.Item>
-            <Button htmlType={"submit"} type={"primary"}>
+            <MyButton htmlType={"submit"} type={"primary"}>
               注册
-            </Button>
+            </MyButton>
           </FormCard>
         </RegisterForm>
       </Form>

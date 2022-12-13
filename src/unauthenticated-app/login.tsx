@@ -20,7 +20,7 @@ export const LoginScreen = ({ isShow, setIsShow }: OverlayProp) => {
       <Form onFinish={handleSubmit}>
         <LoginForm className={isShow ? "none" : "LoginForm"}>
           <FormCard>
-            <h2>LOGIN</h2>
+            <h2 style={{ color: "#257b5e" }}>LOGIN</h2>
             <Divider />
             <Form.Item
               name={"username"}
@@ -34,9 +34,9 @@ export const LoginScreen = ({ isShow, setIsShow }: OverlayProp) => {
             >
               <MyInput placeholder={"密码"} type="password" id={"password"} />
             </Form.Item>
-            <Button htmlType={"submit"} type={"primary"}>
+            <MyButton htmlType={"submit"} type={"primary"}>
               登陆
-            </Button>
+            </MyButton>
           </FormCard>
         </LoginForm>
       </Form>
@@ -48,4 +48,12 @@ export const LoginForm = styled.div`
   width: 100%;
   transform: translateX(10%);
   z-index: 1;
+`;
+export const MyButton = styled(Button)`
+  text-align: center;
+  border-radius: 12rem;
+  height: 5rem;
+  width: 12rem;
+  /* 触发后 鼠标变小手 */
+  transition: all 800m ease-in;
 `;

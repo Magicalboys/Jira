@@ -14,11 +14,11 @@ export const Overlay = ({ isShow, setIsShow }: OverlayProp) => {
       <OverlayBox className={"OverlayBox"}>
         <OverlayPanel>
           <OverlayLeft className={isShow ? "" : "OverlayLeft"}>
-            <h1
+            <h2
               style={{ fontWeight: 800, color: "white", textAlign: "center" }}
             >
               欢迎注册
-            </h1>
+            </h2>
             <OverlayButton
               onClick={() => {
                 setIsShow(!isShow);
