@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { FormBoxs, FormCard, MyInput } from "./index";
 import { OverlayProp } from "./overlay";
 import "../assets/css/index.css";
-import { MyButton } from "./login";
+import { MyButton, MyDivider } from "./login";
 
 // TODO:注册页面
 
@@ -24,7 +24,7 @@ export const RegisterScreen = ({ isShow, setIsShow }: OverlayProp) => {
         <RegisterForm className={isShow ? "none" : "RegisterForm"}>
           <FormCard>
             <h2 style={{ color: "#257b5e" }}> REGISTER </h2>
-            <Divider />
+            <MyDivider />
             <Form.Item
               name={"username"}
               rules={[{ required: true, message: "请输入用户名" }]}
@@ -48,8 +48,9 @@ export const RegisterScreen = ({ isShow, setIsShow }: OverlayProp) => {
 };
 
 export const RegisterForm = styled.div`
-  margin-top: 12rem;
+  margin-top: 10rem;
+  opacity: 0;
   width: 100%;
-  transform: translateX(150%);
   z-index: 1;
+  transition: all 0.8s ease-in-out;
 `;

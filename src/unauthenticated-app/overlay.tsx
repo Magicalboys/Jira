@@ -53,7 +53,7 @@ const OverlayContainer = styled.div`
   width: 50%;
   height: 100%;
   overflow: hidden;
-  transition: all 0.6s ease-in-out;
+  transition: all 1s ease-in-out;
   z-index: 99;
 `;
 // overlay
@@ -91,6 +91,7 @@ const OverlayButton = styled.button`
   border: 2px solid #ffffff;
   border-radius: 12rem;
   /* 触发后 鼠标变小手 */
+  cursor: pointer;
   transition: all 800m ease-in;
   color: white;
 `;

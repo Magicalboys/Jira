@@ -21,7 +21,7 @@ export const LoginScreen = ({ isShow, setIsShow }: OverlayProp) => {
         <LoginForm className={isShow ? "none" : "LoginForm"}>
           <FormCard>
             <h2 style={{ color: "#257b5e" }}>LOGIN</h2>
-            <Divider />
+            <MyDivider />
             <Form.Item
               name={"username"}
               rules={[{ required: true, message: "请输入用户名" }]}
@@ -44,16 +44,22 @@ export const LoginScreen = ({ isShow, setIsShow }: OverlayProp) => {
   );
 };
 export const LoginForm = styled.div`
-  margin-top: 12rem;
-  width: 100%;
-  transform: translateX(10%);
   z-index: 1;
+  width: 100%;
+  margin-top: 10rem;
+  transform: translateX(10%);
 `;
 export const MyButton = styled(Button)`
   text-align: center;
   border-radius: 12rem;
   height: 5rem;
   width: 12rem;
-  /* 触发后 鼠标变小手 */
-  transition: all 800m ease-in;
+  transition: all 1ms ease-in;
+`;
+
+export const MyDivider = styled.div`
+  margin: 3rem 0;
+  height: 1px;
+  width: 100%;
+  background: #257b5e;
 `;
