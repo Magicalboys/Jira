@@ -1,11 +1,11 @@
 import React, { FormEvent } from "react";
-import { useAuth } from "../context/auth-context";
-import { Form, Input, Button, Divider } from "antd";
 import styled from "@emotion/styled";
+import { Form } from "antd";
 import { FormBoxs, FormCard, MyInput } from "./index";
-import { OverlayProp } from "./overlay";
-import "../assets/css/index.css";
 import { MyButton, MyDivider } from "./login";
+import { OverlayProp } from "./overlay";
+import { useAuth } from "../context/auth-context";
+import "../assets/css/index.css";
 
 // TODO:注册页面
 
@@ -29,13 +29,13 @@ export const RegisterScreen = ({ isShow, setIsShow }: OverlayProp) => {
               name={"username"}
               rules={[{ required: true, message: "请输入用户名" }]}
             >
-              <MyInput placeholder={"用户名"} type="text" id={"username"} />
+              <MyInput placeholder={"用户名"} type="text" id={"usernames"} />
             </Form.Item>
             <Form.Item
               name={"password"}
               rules={[{ required: true, message: "请输入密码" }]}
             >
-              <MyInput placeholder={"密码"} type="password" id={"password"} />
+              <MyInput placeholder={"密码"} type="password" id={"passwords"} />
             </Form.Item>
             <MyButton htmlType={"submit"} type={"primary"}>
               注册

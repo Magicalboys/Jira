@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button } from "antd";
 import styled from "@emotion/styled";
-import "../assets/css/index.css";
 import welcome from "../assets/images/welcome.png";
+import { Button } from "antd";
+import "../assets/css/index.css";
 export interface OverlayProp {
   isShow: boolean;
   setIsShow: (isShow: boolean) => void;
