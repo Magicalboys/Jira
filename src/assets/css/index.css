@@ -8,7 +8,7 @@
 }
 .RegisterForm {
   opacity: 1 !important;
-  transform: translateX(135%);
+  transform: translateX(150%);
   transition: all 1s ease-in-out;
 }
 

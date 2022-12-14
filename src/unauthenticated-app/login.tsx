@@ -48,6 +48,7 @@ export const LoginForm = styled.div`
   width: 100%;
   margin-top: 10rem;
   transform: translateX(10%);
+  transition: all 1s ease-in-out;
 `;
 export const MyButton = styled(Button)`
   text-align: center;
