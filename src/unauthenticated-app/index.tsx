@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { Input } from "antd";
+import { Input, Typography } from "antd";
 import { LoginScreen } from "./login";
 import { Overlay } from "./overlay";
 import { RegisterScreen } from "./register";
@@ -8,16 +8,23 @@ import { RegisterScreen } from "./register";
 export const UnauthenticatedApp = () => {
   const [isShow, setIsShow] = useState(true);
 
+  const [error, setError] = useState<Error | null>(null);
+
   return (
     <Box>
       <Container>
-        <RegisterScreen isShow={isShow} setIsShow={setIsShow} />
-        <LoginScreen isShow={isShow} setIsShow={setIsShow} />
+        <RegisterScreen
+          onError={setError}
+          isShow={isShow}
+          setIsShow={setIsShow}
+        />
+        <LoginScreen
+          onError={setError}
+          isShow={isShow}
+          setIsShow={setIsShow}
+          ErrorText={error?.message}
+        />
         <Overlay isShow={isShow} setIsShow={setIsShow} />
-        {/* 用于切换登录与注册的状态 */}
-        {/* <button onClick={() => setIsRegister(!isRegister)}>
-          切换到{isRegister ? "登陆" : "注册"}
-        </button> */}
       </Container>
     </Box>
   );
@@ -63,3 +70,4 @@ export const FormCard = styled.div`
 export const MyInput = styled(Input)`
   border-radius: 10rem;
 `;
+const ErrorText = styled.div``;

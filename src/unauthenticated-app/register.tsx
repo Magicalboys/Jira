@@ -9,13 +9,21 @@ import "../assets/css/index.css";
 
 // TODO:注册页面
 
-export const RegisterScreen = ({ isShow, setIsShow }: OverlayProp) => {
+export const RegisterScreen = ({ isShow, onError }: OverlayProp) => {
   // Context 来共享 login,user
   const { register, user } = useAuth();
 
   // antd 根据表单中  Form.Item 的 name 推断出 要传入的 是username和password
-  const handleSubmit = (values: { username: string; password: string }) => {
-    register(values);
+  const handleSubmit = ({
+    cpassword,
+    ...values
+  }: {
+    username: string;
+    password: string;
+    cpassword: string;
+  }) => {
+    // 当注册发送错误时，通过调用catch来触发Error
+    register(values).catch(onError);
   };
 
   return (
@@ -35,7 +43,21 @@ export const RegisterScreen = ({ isShow, setIsShow }: OverlayProp) => {
               name={"password"}
               rules={[{ required: true, message: "请输入密码" }]}
             >
-              <MyInput placeholder={"密码"} type="password" id={"passwords"} />
+              <MyInput
+                placeholder={"输入密码"}
+                type="password"
+                id={"passwords"}
+              />
+            </Form.Item>
+            <Form.Item
+              name={"cpassword"}
+              rules={[{ required: true, message: "请确认密码" }]}
+            >
+              <MyInput
+                placeholder={"确认密码"}
+                type="password"
+                id={"passwords"}
+              />
             </Form.Item>
             <MyButton htmlType={"submit"} type={"primary"}>
               注册

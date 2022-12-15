@@ -1,30 +1,34 @@
-// qs是一个用于解析和字符串化的工具库
 import * as qs from "qs";
 import React from "react";
+import styled from "@emotion/styled";
 import { clearnObject, useDebounce } from "../../utils";
 import { List } from "./list";
+import { Project } from "./list";
 import { SearchPanel } from "./search-panel";
+import { useAsync } from "./../../utils/useAsync";
 import { useEffect, useState } from "react";
 import { useHttp } from "../../utils/http";
 import { useMount } from "./../../utils/index";
-import styled from "@emotion/styled";
-
+import { Typography } from "antd";
+// qs是一个用于解析和字符串化的工具库
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
     name: "",
     personId: "",
   });
+  const { run, isLoading, error, data: list } = useAsync<Project[]>();
 
   const debouncedParam = useDebounce(param, 200);
 
   const [users, setUsers] = useState([]);
 
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
 
   const client = useHttp();
   // 获取项目列表接口
   useEffect(() => {
-    client("projects", { data: clearnObject(debouncedParam) }).then(setList);
+    run(client("projects", { data: clearnObject(debouncedParam) }));
+    // .then(setList);
   }, [debouncedParam]); //当debouncedParam改变时获取
 
   //用自定义hook 来 初始化user
@@ -36,7 +40,10 @@ export const ProjectListScreen = () => {
     <Container>
       <Title style={{ color: "white" }}>项目列表</Title>
       <SearchPanel users={users} param={param} setParam={setParam} />
-      <List users={users} list={list} />
+      {error ? (
+        <Typography.Text type={"danger"}>{error.message} </Typography.Text>
+      ) : null}
+      <List loading={isLoading} users={users} dataSource={list || []} />
     </Container>
   );
 };

@@ -6,13 +6,14 @@ import { OverlayProp } from "./overlay";
 import { useAuth } from "../context/auth-context";
 // TODO:登录页面
 
-export const LoginScreen = ({ isShow, setIsShow }: OverlayProp) => {
+export const LoginScreen = ({ isShow, onError, ErrorText }: OverlayProp) => {
   // Context 来共享 login,user
   const { login, user } = useAuth();
 
   // antd 根据表单中  Form.Item 的 name 推断出 要传入的 是username和password
   const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+    // 当注册发送错误时，通过调用catch来触发Error
+    login(values).catch(onError);
   };
 
   return (
@@ -21,6 +22,7 @@ export const LoginScreen = ({ isShow, setIsShow }: OverlayProp) => {
         <LoginForm className={isShow ? "none" : "LoginForm"}>
           <FormCard>
             <h2 style={{ color: "#257b5e" }}>LOGIN</h2>
+            <div style={{ color: "#ff4d4f" }}>{ErrorText}</div>
             <MyDivider />
             <Form.Item
               name={"username"}

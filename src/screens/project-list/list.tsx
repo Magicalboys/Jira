@@ -1,10 +1,10 @@
 import React from "react";
 import { User } from "./search-panel";
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
 // Project 的接口类型
-interface Project {
+export interface Project {
   id: string;
   name: string;
   personId: string;
@@ -12,12 +12,11 @@ interface Project {
   organization: string;
   created: number;
 }
-
-interface ListProps {
-  list: Project[];
+// TableProps 是 Table 上面所有属性的集合
+interface ListProps extends TableProps<Project> {
   users: User[];
 }
-export const List = ({ list, users }: ListProps) => {
+export const List = ({ users, ...props }: ListProps) => {
   // pagination:分页 columns:每一列如何渲染 dataSource：源数据
   return (
     <Container>
@@ -68,7 +67,7 @@ export const List = ({ list, users }: ListProps) => {
             },
           },
         ]}
-        dataSource={list}
+        {...props}
       />
     </Container>
   );

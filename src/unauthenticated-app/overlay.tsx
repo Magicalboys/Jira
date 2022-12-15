@@ -6,6 +6,8 @@ import "../assets/css/index.css";
 export interface OverlayProp {
   isShow: boolean;
   setIsShow: (isShow: boolean) => void;
+  onError?: (error: Error) => void;
+  ErrorText?: string;
 }
 
 export const Overlay = ({ isShow, setIsShow }: OverlayProp) => {
