@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 // 考虑 value 等于0的情况，!!value 意思是将value转化成布尔值
 export const isNull = (value: unknown) => (value === 0 ? false : !value);
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === "";
 
 // 在一个函数中，改变传入对象本身是不好的。
 
@@ -13,7 +15,7 @@ export const clearnObject = (object?: { [key: string]: unknown }) => {
   Object.keys(result).forEach((keys) => {
     const value = result[keys];
     //0
-    if (isNull(value)) {
+    if (isVoid(value)) {
       delete result[keys];
     }
   });
@@ -24,6 +26,7 @@ export const clearnObject = (object?: { [key: string]: unknown }) => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
+    // TODO:依赖
   }, []);
 };
 

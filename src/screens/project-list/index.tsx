@@ -7,6 +7,7 @@ import { SearchPanel } from "./search-panel";
 import { useEffect, useState } from "react";
 import { useHttp } from "../../utils/http";
 import { useMount } from "./../../utils/index";
+import styled from "@emotion/styled";
 
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
@@ -32,9 +33,24 @@ export const ProjectListScreen = () => {
   }); //只初始化一次
 
   return (
-    <div>
+    <Container>
+      <Title style={{ color: "white" }}>项目列表</Title>
       <SearchPanel users={users} param={param} setParam={setParam} />
       <List users={users} list={list} />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;
+const Title = styled.h1`
+  width: 5em;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 0.5em;
+  border: 1px solid white;
+  background-color: #f5e2e220;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 20px rgba(0, 0, 0, 0.2);
+`;
