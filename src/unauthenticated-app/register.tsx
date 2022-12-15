@@ -22,6 +22,8 @@ export const RegisterScreen = ({ isShow, onError }: OverlayProp) => {
     password: string;
     cpassword: string;
   }) => {
+    if (cpassword !== values.password) {
+    }
     // 当注册发送错误时，通过调用catch来触发Error
     register(values).catch(onError);
   };
@@ -56,7 +58,7 @@ export const RegisterScreen = ({ isShow, onError }: OverlayProp) => {
               <MyInput
                 placeholder={"确认密码"}
                 type="password"
-                id={"passwords"}
+                id={"cpasswords"}
               />
             </Form.Item>
             <MyButton htmlType={"submit"} type={"primary"}>
