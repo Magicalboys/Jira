@@ -9,7 +9,7 @@ import "../assets/css/index.css";
 
 // TODO:注册页面
 
-export const RegisterScreen = ({ isShow, onError }: OverlayProp) => {
+export const RegisterScreen = ({ isShow, onError, ErrorText }: OverlayProp) => {
   // Context 来共享 login,user
   const { register, user } = useAuth();
 
@@ -22,7 +22,13 @@ export const RegisterScreen = ({ isShow, onError }: OverlayProp) => {
     password: string;
     cpassword: string;
   }) => {
+    // 如果两次密码输入的不一致
     if (cpassword !== values.password) {
+      // 如果 onError 被定义了
+      if (onError) {
+        onError(new Error("输入密码不一致！"));
+        return;
+      }
     }
     // 当注册发送错误时，通过调用catch来触发Error
     register(values).catch(onError);
@@ -34,6 +40,7 @@ export const RegisterScreen = ({ isShow, onError }: OverlayProp) => {
         <RegisterForm className={isShow ? "none" : "RegisterForm"}>
           <FormCard>
             <h2 style={{ color: "#257b5e" }}> REGISTER </h2>
+            <div style={{ color: "#ff4d4f" }}>{ErrorText}</div>
             <MyDivider />
             <Form.Item
               name={"username"}

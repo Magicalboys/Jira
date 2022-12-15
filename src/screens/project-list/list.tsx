@@ -45,7 +45,7 @@ export const List = ({ users, ...props }: ListProps) => {
               return (
                 <span>
                   {/* {可能存在找不到id的情况会返回undefined为了防止保存,用可选链？操作符即可解决} */}
-                  <td>
+                  <td key={project.created}>
                     {users.find((user) => user.id === project.personId)?.name}
                   </td>
                   {/* 为了避免产生错误，后端没有直接返回 personName,只传来了 personId,
@@ -58,7 +58,7 @@ export const List = ({ users, ...props }: ListProps) => {
             title: "创建时间",
             render(value, project) {
               return (
-                <span>
+                <span key={project.created}>
                   {project.created
                     ? dayjs(project.created).format("YYYY-MM-DD")
                     : "无"}

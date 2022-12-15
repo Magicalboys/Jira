@@ -17,6 +17,7 @@ export const UnauthenticatedApp = () => {
           onError={setError}
           isShow={isShow}
           setIsShow={setIsShow}
+          ErrorText={error?.message}
         />
         <LoginScreen
           onError={setError}

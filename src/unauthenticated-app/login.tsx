@@ -4,16 +4,19 @@ import { Button, Form } from "antd";
 import { FormBoxs, FormCard, MyInput } from "./index";
 import { OverlayProp } from "./overlay";
 import { useAuth } from "../context/auth-context";
+import { useAsync } from "./../utils/useAsync";
 // TODO:登录页面
 
 export const LoginScreen = ({ isShow, onError, ErrorText }: OverlayProp) => {
   // Context 来共享 login,user
   const { login, user } = useAuth();
 
+  const { run, isLoading } = useAsync();
+
   // antd 根据表单中  Form.Item 的 name 推断出 要传入的 是username和password
   const handleSubmit = (values: { username: string; password: string }) => {
     // 当注册发送错误时，通过调用catch来触发Error
-    login(values).catch(onError);
+    run(login(values).catch(onError));
   };
 
   return (
@@ -36,7 +39,7 @@ export const LoginScreen = ({ isShow, onError, ErrorText }: OverlayProp) => {
             >
               <MyInput placeholder={"密码"} type="password" id={"password"} />
             </Form.Item>
-            <MyButton htmlType={"submit"} type={"primary"}>
+            <MyButton loading={isLoading} htmlType={"submit"} type={"primary"}>
               登陆
             </MyButton>
           </FormCard>
