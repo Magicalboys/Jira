@@ -58,7 +58,7 @@ export const useAsync = <D>(initialState?: State<D>) => {
     isSucess: state.stat === "success",
     run,
     setData,
-    setState,
+    setError,
     ...state,
   };
 };

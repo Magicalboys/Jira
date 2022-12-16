@@ -1,7 +1,7 @@
 import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { loadServer } from "jira-dev-tool";
+import { loadServer, DevTools } from "jira-dev-tool";
 // 务必在 jira-dev-tool 后面引入
 // 为了设置主题色
 import "antd/dist/antd.less";
@@ -15,6 +15,7 @@ const root = ReactDOM.createRoot(
 loadServer(() =>
   root.render(
     <AppProviders>
+      <DevTools />
       <App />
     </AppProviders>
   )

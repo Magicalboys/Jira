@@ -7,6 +7,8 @@ import { ReactNode } from "react";
 import { User } from "./../screens/project-list/search-panel";
 import { http } from "./../utils/http";
 import { useMount } from "./../utils/index";
+import { useAsync } from "./../utils/useAsync";
+import { FullPageLoading } from "../components/lib";
 
 interface Authfrom {
   username: string;
@@ -45,7 +47,15 @@ AuthContext.displayName = "AuthContext";
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // 默认的user就是 null 值
   // 所以一旦刷新 user 就变为null了
-  const [user, setUser] = useState<User | null>(null);
+
+  const {
+    isIdle,
+    isLoading,
+    data: user,
+    error,
+    run,
+    setData: setUser,
+  } = useAsync<User | null>();
 
   // 登录以后改变 user 状态
   const login = (form: Authfrom) => auth.login(form).then(setUser);
@@ -57,8 +67,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // 当页面加载时初始化 User
   useMount(() => {
-    bootstrapUser().then(setUser);
+    run(bootstrapUser());
   });
+
+  if (isIdle || isLoading) {
+    return <FullPageLoading />;
+  }
 
   return (
     <AuthContext.Provider
