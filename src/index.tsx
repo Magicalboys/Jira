@@ -7,7 +7,6 @@ import { loadServer, DevTools } from "jira-dev-tool";
 import "antd/dist/antd.less";
 import "./index.css";
 import { AppProviders } from "./context/index";
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

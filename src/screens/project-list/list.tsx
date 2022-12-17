@@ -3,6 +3,12 @@ import { User } from "./search-panel";
 import { Table, TableProps } from "antd";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
+
+// react-router 与 react-router-dom 关系类似于 react 与 react-dom
+// react是核心库 主要处理虚拟、计算、理论的逻辑 类似于state、diff运算
+// react-dom 用于消费react 计算出来的结果，主要生活在浏览器的宿主环境里
+//           里面充满的dom操作，而这些dom操作只能在浏览器运行
+import { Link } from "react-router-dom";
 // Project 的接口类型
 export interface Project {
   id: string;
@@ -29,9 +35,12 @@ export const List = ({ users, ...props }: ListProps) => {
           {
             title: "名称",
             // dataIndex 表示 根据名称读取对应的值
-            dataIndex: "name",
+
             // 排序：按照名称的首字母排序
             sorter: (a, b) => a.name.localeCompare(b.name),
+            render(value, project) {
+              return <Link to={String(project.id)}>{project.name}</Link>;
+            },
           },
           {
             title: "部门",

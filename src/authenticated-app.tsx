@@ -1,41 +1,54 @@
 import React from "react";
-import { useAuth } from "./context/auth-context";
-import { ProjectListScreen } from "./screens/project-list";
 import styled from "@emotion/styled";
 import { MyButton } from "./unauthenticated-app/login";
+import { ProjectListScreen } from "./screens/project-list";
 import { Row } from "./components/lib";
+import { useAuth } from "./context/auth-context";
+import { Navigate, Route, Routes } from "react-router";
+import { ProjectScreen } from "./screens/project";
+import { BrowserRouter as Router } from "react-router-dom";
+
 // 登陆后的 App
 export const AuthenticatedApp = () => {
   // 登出状态
-  const { logout, user } = useAuth();
+
   return (
     <div>
-      <PageHeader between={true}>
-        <HeaderLeft gap={true}>
-          <h2 style={{ color: "white" }}>Login</h2>
-          <h2 style={{ color: "white" }}>项目</h2>
-          <h2 style={{ color: "white" }}>用户</h2>
-        </HeaderLeft>
-
-        <h2
-          style={{
-            textAlign: "center",
-            fontFamily: "华文行楷",
-            fontSize: "40px",
-          }}
-        >
-          Hello,{user?.name}
-        </h2>
-
-        <HeaderRight>
-          <MyButton onClick={logout}>登出</MyButton>
-        </HeaderRight>
-      </PageHeader>
-      <ProjectListScreen />
+      <PageHeader />
+      <Router>
+        <Routes>
+          <Route path={"/projects"} element={<ProjectListScreen />} />
+          <Route path={"/projects/:projectId/*"} element={<ProjectScreen />} />
+        </Routes>
+      </Router>
     </div>
   );
 };
-const PageHeader = styled(Row)`
+const PageHeader = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Header between={true}>
+      <HeaderLeft gap={true}>
+        <h2 style={{ color: "white" }}>Login</h2>
+        <h2 style={{ color: "white" }}>项目</h2>
+        <h2 style={{ color: "white" }}>用户</h2>
+      </HeaderLeft>
+      <h2
+        style={{
+          textAlign: "center",
+          fontFamily: "华文行楷",
+          fontSize: "40px",
+        }}
+      >
+        Hello,{user?.name}
+      </h2>
+      <HeaderRight>
+        <MyButton onClick={logout}>登出</MyButton>
+      </HeaderRight>
+    </Header>
+  );
+};
+const Header = styled(Row)`
   height: 10rem;
   border-radius: 3rem;
   border: 1px solid white;
