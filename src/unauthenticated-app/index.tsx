@@ -4,8 +4,11 @@ import { Input, Typography } from "antd";
 import { LoginScreen } from "./login";
 import { Overlay } from "./overlay";
 import { RegisterScreen } from "./register";
+import { useDocumentTitle } from "../utils";
 // 登陆前的 app
 export const UnauthenticatedApp = () => {
+  useDocumentTitle("登录注册");
+
   const [isShow, setIsShow] = useState(true);
 
   const [error, setError] = useState<Error | null>(null);

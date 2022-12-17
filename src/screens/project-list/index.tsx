@@ -1,7 +1,7 @@
 import * as qs from "qs";
 import React from "react";
 import styled from "@emotion/styled";
-import { clearnObject, useDebounce } from "../../utils";
+import { clearnObject, useDebounce, useDocumentTitle } from "../../utils";
 import { List } from "./list";
 import { Project } from "./list";
 import { SearchPanel } from "./search-panel";
@@ -17,6 +17,8 @@ export const ProjectListScreen = () => {
     personId: "",
   });
   const { run, isLoading, error, data: list } = useAsync<Project[]>();
+
+  useDocumentTitle("项目列表");
 
   const debouncedParam = useDebounce(param, 200);
 

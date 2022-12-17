@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 //1. 清除空对象。
 
@@ -46,4 +46,25 @@ export const useDebounce = <V,>(value: V, delay?: number): V => {
 
   // 将 value 成功转化成了 deboucedValue ,也降低了其更新频率
   return deboucedValue;
+};
+
+// 自动显示标题 当页面回退后 标题需要自动退回
+export const useDocumentTitle = (
+  title: string,
+  keepOnumount: boolean = true
+) => {
+  // 页面刚加载的标题
+  const oldTitle = useRef(document.title).current;
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  useEffect(() => {
+    return () => {
+      if (!keepOnumount) {
+        document.title = oldTitle;
+      }
+    };
+  });
 };
