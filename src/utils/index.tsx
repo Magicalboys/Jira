@@ -68,3 +68,7 @@ export const useDocumentTitle = (
     };
   });
 };
+// 重置路由，切换值跟路由
+export const resetRoute = () => {
+  window.location.href = window.location.origin;
+};

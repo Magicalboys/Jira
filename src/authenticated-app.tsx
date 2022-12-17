@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { MyButton } from "./unauthenticated-app/login";
-import { ProjectListScreen } from "./screens/project-list";
-import { Row } from "./components/lib";
-import { useAuth } from "./context/auth-context";
-import { Navigate, Route, Routes } from "react-router";
-import { ProjectScreen } from "./screens/project";
 import { BrowserRouter as Router } from "react-router-dom";
+import { MyButton } from "./unauthenticated-app/login";
+import { Navigate, Route, Routes } from "react-router";
+import { ProjectListScreen } from "./screens/project-list";
+import { ProjectScreen } from "./screens/project";
+import { Row } from "./components/lib";
+import { Button } from "antd";
+import { useAuth } from "./context/auth-context";
+import { resetRoute } from "./utils";
 
 // 登陆后的 App
 export const AuthenticatedApp = () => {
@@ -19,6 +21,10 @@ export const AuthenticatedApp = () => {
         <Routes>
           <Route path={"/projects"} element={<ProjectListScreen />} />
           <Route path={"/projects/:projectId/*"} element={<ProjectScreen />} />
+          <Route
+            path="*"
+            element={<Navigate to={"projects"} replace />}
+          ></Route>
         </Routes>
       </Router>
     </div>
@@ -29,7 +35,11 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <h2 style={{ color: "white" }}>Login</h2>
+        {/* 重置路由，切换值跟路由 */}
+        <Button type="link" onClick={resetRoute}>
+          <h2 style={{ color: "white" }}>Login</h2>
+        </Button>
+
         <h2 style={{ color: "white" }}>项目</h2>
         <h2 style={{ color: "white" }}>用户</h2>
       </HeaderLeft>
