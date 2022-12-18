@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 // react-dom 用于消费react 计算出来的结果，主要生活在浏览器的宿主环境里
 //           里面充满的dom操作，而这些dom操作只能在浏览器运行
 import { Link } from "react-router-dom";
+import { Collection } from "../../components/collection";
 // Project 的接口类型
 export interface Project {
   id: string;
@@ -32,6 +33,12 @@ export const List = ({ users, ...props }: ListProps) => {
         className=""
         pagination={false}
         columns={[
+          {
+            title: <Collection checked={true} disabled={true} />,
+            render(value, project) {
+              return <Collection checked={project.pin} />;
+            },
+          },
           {
             title: "名称",
             // dataIndex 表示 根据名称读取对应的值

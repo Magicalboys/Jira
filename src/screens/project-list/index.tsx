@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useHttp } from "../../utils/http";
 import { useMount } from "./../../utils/index";
 import { Typography } from "antd";
+import { useUrlQueryParam } from "../../utils/url";
 // qs是一个用于解析和字符串化的工具库
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
@@ -19,6 +20,8 @@ export const ProjectListScreen = () => {
   const { run, isLoading, error, data: list } = useAsync<Project[]>();
 
   useDocumentTitle("项目列表");
+
+  // const param = useUrlQueryParam(['name','personId']);
 
   const debouncedParam = useDebounce(param, 200);
 
