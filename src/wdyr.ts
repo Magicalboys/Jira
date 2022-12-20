@@ -5,6 +5,6 @@ if (process.env.NODE_ENV === "development") {
   const whyDidYouRender = require("@welldone-software/why-did-you-render");
   whyDidYouRender(React, {
     // 指定不是跟踪所有的组件 而是确定的某一组件
-    trackAllPureComponents: true,
+    trackAllPureComponents: false,
   });
 }

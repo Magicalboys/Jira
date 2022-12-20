@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 //           里面充满的dom操作，而这些dom操作只能在浏览器运行
 import { Link } from "react-router-dom";
 import { Collection } from "../../components/collection";
+import { useEditProject } from "../../utils/project";
 // Project 的接口类型
 export interface Project {
   id: number;
@@ -24,19 +25,27 @@ interface ListProps extends TableProps<Project> {
   users: User[];
 }
 export const List = ({ users, ...props }: ListProps) => {
+  const { mutate } = useEditProject();
+
   // pagination:分页 columns:每一列如何渲染 dataSource：源数据
   return (
     <Container>
       <Table
         //是否分页
         style={{ borderRadius: "50em" }}
-        className=""
         pagination={false}
         columns={[
           {
             title: <Collection checked={true} disabled={true} />,
             render(value, project) {
-              return <Collection checked={project.pin} />;
+              return (
+                <Collection
+                  checked={project.pin}
+                  onCheckedChange={(pin) => {
+                    mutate({ id: project.id, pin });
+                  }}
+                />
+              );
             },
           },
           {
