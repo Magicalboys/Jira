@@ -1,10 +1,12 @@
 import React from "react";
 import { Input, Select, Form } from "antd";
 import { MyInput } from "../../unauthenticated-app";
+import { Project } from "./list";
+import { UserSelect } from "../../components/user-select";
 
 // 暴露 User 接口实现复用
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -14,10 +16,7 @@ export interface User {
 
 interface SearchPanelProp {
   users: User[];
-  param: {
-    name: string;
-    personId: string;
-  };
+  param: Partial<Pick<Project, "name" | "personId">>;
   setParam: (param: SearchPanelProp["param"]) => void;
 }
 
@@ -37,24 +36,16 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProp) => {
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        <UserSelect
           value={param.personId}
-          // 使用 antd 返回的对象需要 e.target.value 而直接是 value
+          defaultOptionName={"负责人"}
           onChange={(value) =>
             setParam({
               ...param,
               personId: value,
             })
           }
-        >
-          <Select.Option value={""}>负责人</Select.Option>
-
-          {users.map((user) => (
-            <Select.Option key={user.id} value={user.id}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+        />
       </Form.Item>
     </Form>
   );

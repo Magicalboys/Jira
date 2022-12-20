@@ -1,7 +1,7 @@
 import * as qs from "qs";
 import React from "react";
 import styled from "@emotion/styled";
-import { clearnObject, useDebounce, useDocumentTitle } from "../../utils";
+import { useDebounce, useDocumentTitle } from "../../utils";
 import { List } from "./list";
 import { Project } from "./list";
 import { SearchPanel } from "./search-panel";
@@ -11,47 +11,43 @@ import { useHttp } from "../../utils/http";
 import { useMount } from "./../../utils/index";
 import { Typography } from "antd";
 import { useUrlQueryParam } from "../../utils/url";
+import { useProjects } from "./../../utils/project";
+import { useUsers } from "../../utils/user";
+import { useProjectsSearchParams } from "./util";
 // qs是一个用于解析和字符串化的工具库
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
-  const { run, isLoading, error, data: list } = useAsync<Project[]>();
+  useDocumentTitle("项目列表", false);
 
-  useDocumentTitle("项目列表");
+  const [param, setParam] = useProjectsSearchParams();
+
+  const { isLoading, error, data: list } = useProjects(useDebounce(param, 200));
+
+  const { data: users } = useUsers();
 
   // const param = useUrlQueryParam(['name','personId']);
 
-  const debouncedParam = useDebounce(param, 200);
-
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
   // const [list, setList] = useState([]);
 
-  const client = useHttp();
-  // 获取项目列表接口
-  useEffect(() => {
-    run(client("projects", { data: clearnObject(debouncedParam) }));
-    // .then(setList);
-  }, [debouncedParam]); //当debouncedParam改变时获取
-
-  //用自定义hook 来 初始化user
-  useMount(() => {
-    client("users").then(setUsers);
-  }); //只初始化一次
+  // //用自定义hook 来 初始化user
+  // useMount(() => {
+  //   client("users").then(setUsers);
+  // }); //只初始化一次
 
   return (
     <Container>
       <Title style={{ color: "white" }}>项目列表</Title>
-      <SearchPanel users={users} param={param} setParam={setParam} />
+      <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message} </Typography.Text>
       ) : null}
-      <List loading={isLoading} users={users} dataSource={list || []} />
+      <List loading={isLoading} users={users || []} dataSource={list || []} />
     </Container>
   );
 };
+// 确定范围 查找这个组件 可能导致循环依赖的原因
+ProjectListScreen.whyDidYouRender = false;
 
 const Container = styled.div`
   padding: 3.2rem;
