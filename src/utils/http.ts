@@ -1,7 +1,7 @@
 import { Console } from "console";
 import { config } from "process";
 import qs from "qs";
-import React from "react";
+import React, { useCallback } from "react";
 import * as auth from "../auth-provider";
 import { useAuth } from "../context/auth-context";
 
@@ -67,6 +67,9 @@ export const useHttp = () => {
   // TODO:讲解TS操作符
   // 传入的类型和 http的类型完全一样,可以因此进行优化
   // ... 展开操作符,使接收时更加方便
-  return (...[endpoint, config]: Parameters<typeof http>) =>
-    http(endpoint, { ...config, token: user?.token });
+  return useCallback(
+    (...[endpoint, config]: Parameters<typeof http>) =>
+      http(endpoint, { ...config, token: user?.token }),
+    [user?.token]
+  );
 };
