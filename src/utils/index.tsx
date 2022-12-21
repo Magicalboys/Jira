@@ -85,3 +85,22 @@ export const subset = <
   );
   return Object.fromEntries(filteredEntries) as Pick<O, K>;
 };
+
+// 返回组件的挂载状态，如果还没挂载或者已经卸载，返回false;反之返回 true
+
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
+
+  useEffect(
+    // 组件渲染时执行
+    () => {
+      mountedRef.current = true;
+
+      //组件更新或者卸载时执行
+      return () => {
+        mountedRef.current = false;
+      };
+    }
+  );
+  return mountedRef;
+};

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useMountedRef } from ".";
 // 用方便的方式来管理异步操作
 
 interface State<D> {
@@ -14,10 +15,13 @@ const defaultInitialState: State<null> = {
   error: null,
 };
 export const useAsync = <D>(initialState?: State<D>) => {
+  const mountedRef = useMountedRef();
+
   const [state, setState] = useState<State<D>>({
     ...defaultInitialState,
     ...initialState,
   });
+
   const setData = (data: D) =>
     setState({
       data,
@@ -40,16 +44,22 @@ export const useAsync = <D>(initialState?: State<D>) => {
     // 表示异步操作已经开始
     setState({ ...state, stat: "loading" });
 
-    return promise
-      .then((data) => {
+    return (
+      promise
         // 如果操作成功 将数据保存下来
-        setData(data);
-        return data;
-      })
-      .catch((error) => {
-        setError(error);
-        return error;
-      });
+        .then((data) => {
+          // mountedRef.current 为 true 表示 组件已经被挂载并且不是被卸载的状态
+          if (mountedRef.current) {
+            setData(data);
+          }
+
+          return data;
+        })
+        .catch((error) => {
+          setError(error);
+          return error;
+        })
+    );
   };
   return {
     isIdle: state.stat === "idle",
