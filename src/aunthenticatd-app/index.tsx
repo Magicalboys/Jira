@@ -1,25 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { BrowserRouter as Router } from "react-router-dom";
-import { MyButton } from "./unauthenticated-app/login";
+import { MyButton } from "../unauthenticated-app/login";
 import { Navigate, Route, Routes } from "react-router";
-import { ProjectListScreen } from "./screens/project-list";
-import { ProjectScreen } from "./screens/project";
-import { Row } from "./components/lib";
+import { ProjectListScreen } from "../screens/project-list";
+import { ProjectScreen } from "../screens/project";
+import { Row } from "../components/lib";
 import { Button } from "antd";
-import { useAuth } from "./context/auth-context";
-import { resetRoute } from "./utils";
+import { useAuth } from "../context/auth-context";
+import { resetRoute } from "../utils";
+import { ProjectModal } from "../screens/project-list/project-modal";
+import { ProjectPopver } from "../components/project-popover";
 
 // 登陆后的 App
 export const AuthenticatedApp = () => {
   // 登出状态
 
+  const [projectModelOpen, setProjectModelOpen] = useState(false);
   return (
     <div>
-      <PageHeader />
+      <PageHeader setprojectModelOpen={setProjectModelOpen} />
       <Router>
         <Routes>
-          <Route path={"/projects"} element={<ProjectListScreen />} />
+          <Route
+            path={"/projects"}
+            element={
+              <ProjectListScreen setProjectModelOpen={setProjectModelOpen} />
+            }
+          />
           <Route path={"/projects/:projectId/*"} element={<ProjectScreen />} />
           <Route
             path="*"
@@ -27,20 +35,30 @@ export const AuthenticatedApp = () => {
           ></Route>
         </Routes>
       </Router>
+      <ProjectModal
+        projectModealOpen={projectModelOpen}
+        onClose={() => setProjectModelOpen(false)}
+      />
     </div>
   );
 };
-const PageHeader = () => {
+const PageHeader = (props: {
+  setprojectModelOpen: (isOpen: boolean) => void;
+}) => {
   const { logout, user } = useAuth();
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
         {/* 重置路由，切换值跟路由 */}
-        <Button type="link" onClick={resetRoute}>
+        <Button
+          type="link"
+          onClick={resetRoute}
+          style={{ paddingBottom: "5rem" }}
+        >
           <h2 style={{ color: "white" }}>Login</h2>
         </Button>
-
-        <h2 style={{ color: "white" }}>项目</h2>
+        {/* 项目 */}
+        <ProjectPopver setprojectModelOpen={props.setprojectModelOpen} />
         <h2 style={{ color: "white" }}>用户</h2>
       </HeaderLeft>
       <h2

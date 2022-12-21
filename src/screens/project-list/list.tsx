@@ -1,6 +1,8 @@
 import React from "react";
 import { User } from "./search-panel";
 import { Table, TableProps } from "antd";
+import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
+
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
 
@@ -23,6 +25,7 @@ export interface Project {
 // TableProps 是 Table 上面所有属性的集合
 interface ListProps extends TableProps<Project> {
   users: User[];
+  setProjectModelOpen: (isOpen: boolean) => void;
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
@@ -91,6 +94,23 @@ export const List = ({ users, ...props }: ListProps) => {
               );
             },
           },
+          {
+            title: "编辑项目...",
+            render(value, project) {
+              return (
+                <Box key={"edit"}>
+                  <Edit>
+                    <FormOutlined
+                      onClick={() => props.setProjectModelOpen(true)}
+                    />
+                  </Edit>
+                  <Delete>
+                    <DeleteOutlined />
+                  </Delete>
+                </Box>
+              );
+            },
+          },
         ]}
         {...props}
       />
@@ -101,7 +121,13 @@ const Container = styled.div`
   border: 2px solid #257b5e;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 20px rgba(0, 0, 0, 0.2);
 `;
-
+const Box = styled.div``;
+const Edit = styled.span`
+  margin-right: 2rem;
+`;
+const Delete = styled.span`
+  margin-left: 2rem;
+`;
 //   return (
 //     <Table>
 //       {/* <tr> 标签必须被在 <tbody>或<thead> 嵌套,不能直接作为 <table>的子元素 */}

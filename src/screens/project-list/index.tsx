@@ -14,8 +14,12 @@ import { useUrlQueryParam } from "../../utils/url";
 import { useProjects } from "./../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useProjectsSearchParams } from "./util";
+import { Row } from "./../../components/lib";
+import { MyButton } from "../../unauthenticated-app/login";
 // qs是一个用于解析和字符串化的工具库
-export const ProjectListScreen = () => {
+export const ProjectListScreen = (props: {
+  setProjectModelOpen: (isOpen: boolean) => void;
+}) => {
   useDocumentTitle("项目列表", false);
 
   const [param, setParam] = useProjectsSearchParams();
@@ -24,25 +28,25 @@ export const ProjectListScreen = () => {
 
   const { data: users } = useUsers();
 
-  // const param = useUrlQueryParam(['name','personId']);
-
-  // const [users, setUsers] = useState([]);
-
-  // const [list, setList] = useState([]);
-
-  // //用自定义hook 来 初始化user
-  // useMount(() => {
-  //   client("users").then(setUsers);
-  // }); //只初始化一次
-
   return (
     <Container>
-      <Title style={{ color: "white" }}>项目列表</Title>
+      <Row between={true}>
+        <Title style={{ color: "white" }}>项目列表</Title>
+
+        <MyButton onClick={() => props.setProjectModelOpen(true)}>
+          创建项目
+        </MyButton>
+      </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message} </Typography.Text>
       ) : null}
-      <List loading={isLoading} users={users || []} dataSource={list || []} />
+      <List
+        setProjectModelOpen={props.setProjectModelOpen}
+        loading={isLoading}
+        users={users || []}
+        dataSource={list || []}
+      />
     </Container>
   );
 };
@@ -54,8 +58,9 @@ const Container = styled.div`
 `;
 const Title = styled.h1`
   width: 5em;
-  height: 2em;
-  line-height: 2em;
+  height: 1.7em;
+
+  line-height: 1.7em;
   text-align: center;
   border-radius: 0.5em;
   border: 1px solid white;
