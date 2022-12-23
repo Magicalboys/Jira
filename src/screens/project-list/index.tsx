@@ -14,7 +14,7 @@ import { useUrlQueryParam } from "../../utils/url";
 import { useProjects } from "./../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useProjectsModel, useProjectsSearchParams } from "./util";
-import { Row } from "./../../components/lib";
+import { ErrorBox, Row } from "./../../components/lib";
 import { MyButton } from "../../unauthenticated-app/login";
 // qs是一个用于解析和字符串化的工具库
 export const ProjectListScreen = () => {
@@ -37,9 +37,7 @@ export const ProjectListScreen = () => {
         </MyButton>
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
-      {error ? (
-        <Typography.Text type={"danger"}>{error.message} </Typography.Text>
-      ) : null}
+      <ErrorBox error={error} />
       <List loading={isLoading} users={users || []} dataSource={list || []} />
     </Container>
   );

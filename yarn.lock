@@ -8682,7 +8682,7 @@ react-query@^2.26.3:
   dependencies:
     "@babel/runtime" "^7.5.5"
 
-react-query@^3.5.10:
+react-query@^3.39.2, react-query@^3.5.10:
   version "3.39.2"
   resolved "https://registry.npmmirror.com/react-query/-/react-query-3.39.2.tgz#9224140f0296f01e9664b78ed6e4f69a0cc9216f"
   integrity sha512-F6hYDKyNgDQfQOuR1Rsp3VRzJnWHx6aRnnIZHMNGGgbL3SBgpZTDg8MQwmxOgpCAoqZJA+JSNCydF1xGJqKOCA==

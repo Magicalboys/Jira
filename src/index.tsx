@@ -2,6 +2,7 @@ import "./wdyr";
 import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { QueryClientProvider, QueryClient } from "react-query";
 import { loadServer, DevTools } from "jira-dev-tool";
 // 务必在 jira-dev-tool 后面引入
 // 为了设置主题色
@@ -11,13 +12,16 @@ import { AppProviders } from "./context/index";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+const queryClient = new QueryClient();
 
 loadServer(() =>
   root.render(
-    <AppProviders>
-      <DevTools />
-      <App />
-    </AppProviders>
+    <QueryClientProvider client={queryClient}>
+      <AppProviders>
+        <DevTools />
+        <App />
+      </AppProviders>
+    </QueryClientProvider>
   )
 );
 

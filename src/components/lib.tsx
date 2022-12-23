@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Spin } from "antd";
+import { Spin, Typography } from "antd";
 export const Row = styled.div<{
   gap?: number | boolean;
   between?: boolean;
@@ -34,3 +34,15 @@ export const FullPageLoading = () => (
     <Spin size={"large"} />
   </FullPage>
 );
+
+// 类型守卫
+// 当value?.message 不为空时,  value 就强制转成 Error类型, Error是TS自带的类型
+
+const isError = (value: any): value is Error => value?.message;
+
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  if (isError(error)) {
+    return <Typography.Text type={"danger"}>{error.message} </Typography.Text>;
+  }
+  return null;
+};
