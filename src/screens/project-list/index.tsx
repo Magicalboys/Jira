@@ -13,18 +13,18 @@ import { Typography } from "antd";
 import { useUrlQueryParam } from "../../utils/url";
 import { useProjects } from "./../../utils/project";
 import { useUsers } from "../../utils/user";
-import { useProjectsSearchParams } from "./util";
+import { useProjectsModel, useProjectsSearchParams } from "./util";
 import { Row } from "./../../components/lib";
 import { MyButton } from "../../unauthenticated-app/login";
 // qs是一个用于解析和字符串化的工具库
-export const ProjectListScreen = (props: {
-  setProjectModelOpen: (isOpen: boolean) => void;
-}) => {
+export const ProjectListScreen = () => {
   useDocumentTitle("项目列表", false);
 
   const [param, setParam] = useProjectsSearchParams();
 
   const { isLoading, error, data: list } = useProjects(useDebounce(param, 200));
+
+  const { open } = useProjectsModel();
 
   const { data: users } = useUsers();
 
@@ -32,8 +32,7 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row between={true}>
         <Title style={{ color: "white" }}>项目列表</Title>
-
-        <MyButton onClick={() => props.setProjectModelOpen(true)}>
+        <MyButton onClick={open} type={"link"}>
           创建项目
         </MyButton>
       </Row>
@@ -41,12 +40,7 @@ export const ProjectListScreen = (props: {
       {error ? (
         <Typography.Text type={"danger"}>{error.message} </Typography.Text>
       ) : null}
-      <List
-        setProjectModelOpen={props.setProjectModelOpen}
-        loading={isLoading}
-        users={users || []}
-        dataSource={list || []}
-      />
+      <List loading={isLoading} users={users || []} dataSource={list || []} />
     </Container>
   );
 };

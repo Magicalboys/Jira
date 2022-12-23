@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Collection } from "../../components/collection";
 import { useEditProject } from "../../utils/project";
+import { useProjectsModel } from "./util";
 // Project 的接口类型
 export interface Project {
   id: number;
@@ -25,10 +26,11 @@ export interface Project {
 // TableProps 是 Table 上面所有属性的集合
 interface ListProps extends TableProps<Project> {
   users: User[];
-  setProjectModelOpen: (isOpen: boolean) => void;
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
+
+  const { open } = useProjectsModel();
 
   // pagination:分页 columns:每一列如何渲染 dataSource：源数据
   return (
@@ -100,9 +102,7 @@ export const List = ({ users, ...props }: ListProps) => {
               return (
                 <Box key={"edit"}>
                   <Edit>
-                    <FormOutlined
-                      onClick={() => props.setProjectModelOpen(true)}
-                    />
+                    <FormOutlined onClick={open} />
                   </Edit>
                   <Delete>
                     <DeleteOutlined />

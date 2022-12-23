@@ -5,11 +5,12 @@ import { Typography, List, Divider } from "antd";
 import { useProjects } from "./../utils/project";
 import styled from "@emotion/styled";
 import { MyButton } from "../unauthenticated-app/login";
+import { useProjectsModel } from "../screens/project-list/util";
 
-export const ProjectPopver = (props: {
-  setprojectModelOpen: (isOpen: boolean) => void;
-}) => {
+export const ProjectPopver = () => {
   // 获取数据
+
+  const { open } = useProjectsModel();
 
   const { data: projects, isLoading } = useProjects();
 
@@ -29,12 +30,7 @@ export const ProjectPopver = (props: {
         ))}
       </List>
       <Divider />
-      <MyButton
-        onClick={() => {
-          props.setprojectModelOpen(true);
-        }}
-        type={"link"}
-      >
+      <MyButton onClick={open} type={"link"}>
         创建项目
       </MyButton>
     </ContentContainer>

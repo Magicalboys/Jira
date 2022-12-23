@@ -16,35 +16,25 @@ import { ProjectPopver } from "../components/project-popover";
 export const AuthenticatedApp = () => {
   // 登出状态
 
-  const [projectModelOpen, setProjectModelOpen] = useState(false);
   return (
     <div>
-      <PageHeader setprojectModelOpen={setProjectModelOpen} />
       <Router>
+        <PageHeader />
         <Routes>
-          <Route
-            path={"/projects"}
-            element={
-              <ProjectListScreen setProjectModelOpen={setProjectModelOpen} />
-            }
-          />
+          <Route path={"/projects"} element={<ProjectListScreen />} />
           <Route path={"/projects/:projectId/*"} element={<ProjectScreen />} />
           <Route
             path="*"
             element={<Navigate to={"projects"} replace />}
           ></Route>
         </Routes>
+        \
+        <ProjectModal />
       </Router>
-      <ProjectModal
-        projectModealOpen={projectModelOpen}
-        onClose={() => setProjectModelOpen(false)}
-      />
     </div>
   );
 };
-const PageHeader = (props: {
-  setprojectModelOpen: (isOpen: boolean) => void;
-}) => {
+const PageHeader = () => {
   const { logout, user } = useAuth();
   return (
     <Header between={true}>
@@ -58,7 +48,7 @@ const PageHeader = (props: {
           <h2 style={{ color: "white" }}>Login</h2>
         </Button>
         {/* 项目 */}
-        <ProjectPopver setprojectModelOpen={props.setprojectModelOpen} />
+        <ProjectPopver />
         <h2 style={{ color: "white" }}>用户</h2>
       </HeaderLeft>
       <h2
