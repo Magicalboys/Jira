@@ -6,9 +6,9 @@ type SelectProps = React.ComponentProps<typeof Select>;
 
 interface IdSelectProps
   extends Omit<SelectProps, "options" | "value" | "onChange"> {
-  value: Raw | null | undefined;
+  value?: Raw | null | undefined;
   // 将传进来的id 无论什么类型都转成 number
-  onChange: (value?: number) => void;
+  onChange?: (value?: number) => void;
   // 默认值
   defaultOptionName?: string;
   //
@@ -25,7 +25,7 @@ export const IdSelect = (props: IdSelectProps) => {
   return (
     <Select
       value={options?.length ? toNumber(value) : 0}
-      onChange={(value) => onChange(toNumber(value) || undefined)}
+      onChange={(value) => onChange?.(toNumber(value) || undefined)}
       {...restProps}
     >
       {defaultOptionName ? (

@@ -32,9 +32,7 @@ export const ProjectListScreen = () => {
     <Container>
       <Row between={true}>
         <Title style={{ color: "white" }}>项目列表</Title>
-        <MyButton onClick={open} type={"link"}>
-          创建项目
-        </MyButton>
+        <MyButton onClick={open}>创建项目</MyButton>
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       <ErrorBox error={error} />

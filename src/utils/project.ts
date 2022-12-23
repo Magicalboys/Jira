@@ -62,7 +62,7 @@ export const useAddProject = () => {
 
   return useMutation(
     (params: Partial<Project>) =>
-      client(`projects/${params.id}`, {
+      client(`projects`, {
         data: params,
         method: "POST",
       }),
@@ -94,7 +94,7 @@ export const useProject = (id?: number) => {
     () => client(`projects/${id}`),
     // 只有id 有值的时候才会触发 获取详情这个操作
     {
-      enabled: !!id,
+      enabled: Boolean(id),
     }
   );
 };

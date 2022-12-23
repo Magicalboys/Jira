@@ -29,8 +29,10 @@ interface ListProps extends TableProps<Project> {
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
-
+  const { startEdit } = useProjectsModel();
   const { open } = useProjectsModel();
+
+  const editProject = (id: number) => () => startEdit(id);
 
   // pagination:分页 columns:每一列如何渲染 dataSource：源数据
   return (
@@ -100,9 +102,12 @@ export const List = ({ users, ...props }: ListProps) => {
             title: "编辑项目...",
             render(value, project) {
               return (
-                <Box key={"edit"}>
+                <Box>
                   <Edit>
-                    <FormOutlined onClick={open} />
+                    <FormOutlined
+                      onClick={editProject(project.id)}
+                      key={"edit"}
+                    />
                   </Edit>
                   <Delete>
                     <DeleteOutlined />
