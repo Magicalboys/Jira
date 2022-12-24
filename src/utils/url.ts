@@ -7,8 +7,12 @@ import { clearnObject, subset } from "./index";
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   // useSearchParams 用于读取 URL param 自带的 hook
   // searchParams:URL后面所带的所有参数的信息,不可以直接读取 需要用 自带的get方法
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+
+  const setSearchParams = useSetUrlSearchParam();
+
   const [stateKeys] = useState(keys);
+
   return [
     // useMemo 避免每一次组件渲染时都会产生一个新的对象 进而导致 循环依赖问题
     useMemo(
@@ -25,14 +29,22 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
     ),
     //  对 setParam传入的键值 进行限制 只能是初始化的传进useUrlQueryParam键值 即 [key in K]
     (params: Partial<{ [key in K]: unknown }>) => {
-      // fromEntries 把url参数转换成一个对象,然后在被 新传入的 param覆盖
-      // fromEntries(iterable)
-      const o = clearnObject({
-        ...Object.fromEntries(searchParams),
-        ...params,
-      }) as URLSearchParamsInit;
-      // 改变url参数·
-      return setSearchParams(o);
+      return setSearchParams(params);
     },
   ] as const;
+};
+
+export const useSetUrlSearchParam = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  return (params: { [key in string]: unknown }) => {
+    // fromEntries 把url参数转换成一个对象,然后在被 新传入的 param覆盖
+    // fromEntries(iterable)
+    const o = clearnObject({
+      ...Object.fromEntries(searchParams),
+      ...params,
+    }) as URLSearchParamsInit;
+    // 改变url参数·
+    return setSearchParams(o);
+  };
 };
