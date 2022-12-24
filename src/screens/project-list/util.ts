@@ -15,6 +15,11 @@ export const useProjectsSearchParams = () => {
   ] as const;
 };
 
+export const useProjectsQueryKey = () => {
+  const [params] = useProjectsSearchParams();
+  return ["projects", params];
+};
+
 //  URL全局状态管理
 export const useProjectsModel = () => {
   // 创建后URL 就会出现 projectCreate

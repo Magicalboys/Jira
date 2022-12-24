@@ -1,6 +1,6 @@
 import React from "react";
 import { User } from "./search-panel";
-import { Table, TableProps } from "antd";
+import { Table, TableProps, Modal } from "antd";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 
 import styled from "@emotion/styled";
@@ -13,7 +13,8 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Collection } from "../../components/collection";
 import { useEditProject } from "../../utils/project";
-import { useProjectsModel } from "./util";
+import { useProjectsModel, useProjectsQueryKey } from "./util";
+import { useDeleteProject } from "./../../utils/project";
 // Project 的接口类型
 export interface Project {
   id: number;
@@ -28,11 +29,8 @@ interface ListProps extends TableProps<Project> {
   users: User[];
 }
 export const List = ({ users, ...props }: ListProps) => {
-  const { mutate } = useEditProject();
-  const { startEdit } = useProjectsModel();
+  const { mutate } = useEditProject(useProjectsQueryKey());
   const { open } = useProjectsModel();
-
-  const editProject = (id: number) => () => startEdit(id);
 
   // pagination:分页 columns:每一列如何渲染 dataSource：源数据
   return (
@@ -101,19 +99,7 @@ export const List = ({ users, ...props }: ListProps) => {
           {
             title: "编辑项目...",
             render(value, project) {
-              return (
-                <Box>
-                  <Edit>
-                    <FormOutlined
-                      onClick={editProject(project.id)}
-                      key={"edit"}
-                    />
-                  </Edit>
-                  <Delete>
-                    <DeleteOutlined />
-                  </Delete>
-                </Box>
-              );
+              return <More project={project}></More>;
             },
           },
         ]}
@@ -133,6 +119,38 @@ const Edit = styled.span`
 const Delete = styled.span`
   margin-left: 2rem;
 `;
+const More = ({ project }: { project: Project }) => {
+  const { startEdit } = useProjectsModel();
+  const editProject = (id: number) => () => startEdit(id);
+  const { mutate: deleteProject } = useDeleteProject(useProjectsQueryKey());
+  const configDeleteProject = (id: number) => {
+    Modal.confirm({
+      title: "确定删除这个项目吗",
+      content: "点击确认删除",
+      centered: true,
+      cancelText: "取消",
+      okText: "确定",
+      onOk() {
+        deleteProject({ id });
+      },
+    });
+  };
+
+  return (
+    <Box>
+      <Edit>
+        <FormOutlined onClick={editProject(project.id)} key={"edit"} />
+      </Edit>
+      <Delete>
+        <DeleteOutlined
+          onClick={() => configDeleteProject(project.id)}
+          key={"delete"}
+        />
+      </Delete>
+    </Box>
+  );
+};
+
 //   return (
 //     <Table>
 //       {/* <tr> 标签必须被在 <tbody>或<thead> 嵌套,不能直接作为 <table>的子元素 */}

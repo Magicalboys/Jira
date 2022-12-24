@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
-import { useQuery } from "react-query";
+import { QueryKey, useQuery } from "react-query";
 import { useMutation, useQueryClient } from "react-query";
 import { Project } from "./../screens/project-list/list";
 import { useHttp } from "./http";
 import { clearnObject } from "./index";
 import { useAsync } from "./useAsync";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
+} from "./optimistic-update";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
@@ -24,41 +29,32 @@ export const useProjects = (param?: Partial<Project>) => {
   // return result;
 };
 
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
   const client = useHttp();
-
-  const queryClient = useQueryClient();
-
   return useMutation(
     (param: Partial<Project>) =>
       client(`projects/${param.id}`, {
         method: "PATCH",
         data: param,
       }),
-    {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
-    }
+    useEditConfig(queryKey)
   );
-  // const { run, ...asyncResult } = useAsync();
-
-  // const mutate = (params: Partial<Project>) => {
-  //   run(
-  //     client(`projects/${params.id}`, {
-  //       data: params,
-  //       method: "PATCH",
-  //     }, )
-  //   );
-  // };
-  // return {
-  //   mutate,
-  //   ...asyncResult,
-  // };
 };
 
-export const useAddProject = () => {
+export const useDeleteProject = (queryKey: QueryKey) => {
   const client = useHttp();
 
-  const queryClient = useQueryClient();
+  return useMutation(
+    ({ id }: { id: number }) =>
+      client(`projects/${id}`, {
+        method: "DELETE",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
+
+export const useAddProject = (queryKey: QueryKey) => {
+  const client = useHttp();
 
   return useMutation(
     (params: Partial<Project>) =>
@@ -66,9 +62,7 @@ export const useAddProject = () => {
         data: params,
         method: "POST",
       }),
-    {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
-    }
+    useAddConfig(queryKey)
   );
   // const { run, ...asyncResult } = useAsync();
 

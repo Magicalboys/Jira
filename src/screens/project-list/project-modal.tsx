@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "antd/es/form/Form";
 import { Drawer, Button, Spin, Form } from "antd";
-import { useProjectsModel } from "./util";
+import { useProjectsModel, useProjectsQueryKey } from "./util";
 import { MyInput } from "../../unauthenticated-app";
 import { UserSelect } from "../../components/user-select";
 import { MyButton } from "../../unauthenticated-app/login";
@@ -17,7 +17,11 @@ export const ProjectModal = () => {
 
   // 必须要异步的mutateAsync ,因为 我们的需求是 等到编辑和创建完成之后再去关闭或者是提交表单
   // 如果是同步的就没办法捕捉是否是同步的了
-  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject();
+  const {
+    mutateAsync,
+    error,
+    isLoading: mutateLoading,
+  } = useMutateProject(useProjectsQueryKey());
 
   const [form] = useForm();
 
@@ -35,6 +39,7 @@ export const ProjectModal = () => {
   }, [editingProject, form]);
 
   const title = editingProject ? "编辑项目" : "创建项目";
+  const text = editingProject ? "编辑完成" : "创建完成";
 
   return (
     <Drawer
@@ -82,7 +87,7 @@ export const ProjectModal = () => {
                     htmlType={"submit"}
                     type={"primary"}
                   >
-                    {title}
+                    {text}
                   </MyButton>
                 </Form.Item>
               </Form>
