@@ -33,6 +33,12 @@ export const ProjectModal = () => {
     });
   };
 
+  //每次关闭前 重置表单
+  const closeModal = () => {
+    form.resetFields();
+    close();
+  };
+
   //根据修改的详情 editingProject 改变表单
   useEffect(() => {
     form.setFieldsValue(editingProject);
@@ -44,7 +50,7 @@ export const ProjectModal = () => {
   return (
     <Drawer
       forceRender={true}
-      onClose={close}
+      onClose={closeModal}
       open={projectModalOpen}
       width={"100%"}
     >

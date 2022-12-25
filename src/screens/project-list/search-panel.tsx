@@ -1,8 +1,8 @@
 import React from "react";
 import { Input, Select, Form } from "antd";
 import { MyInput } from "../../unauthenticated-app";
-import { Project } from "./list";
 import { UserSelect } from "../../components/user-select";
+import { Project } from "../../type/project";
 
 // 暴露 User 接口实现复用
 export interface User {

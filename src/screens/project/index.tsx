@@ -14,7 +14,12 @@ export const ProjectScreen = () => {
         <Route path={"/task"} element={<TaskScreen />}></Route>
         <Route
           path={"*"}
-          element={<Navigate to={window.location.pathname + "/kanban"} />}
+          element={
+            <Navigate
+              to={window.location.pathname + "/kanban"}
+              replace={true}
+            />
+          }
         ></Route>
       </Routes>
     </div>

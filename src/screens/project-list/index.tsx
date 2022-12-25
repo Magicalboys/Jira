@@ -3,7 +3,6 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import { List } from "./list";
-import { Project } from "./list";
 import { SearchPanel } from "./search-panel";
 import { useAsync } from "./../../utils/useAsync";
 import { useEffect, useState } from "react";

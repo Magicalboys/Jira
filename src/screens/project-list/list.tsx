@@ -15,15 +15,8 @@ import { Collection } from "../../components/collection";
 import { useEditProject } from "../../utils/project";
 import { useProjectsModel, useProjectsQueryKey } from "./util";
 import { useDeleteProject } from "./../../utils/project";
-// Project 的接口类型
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin: boolean;
-  organization: string;
-  created: number;
-}
+import { Project } from "../../type/project";
+
 // TableProps 是 Table 上面所有属性的集合
 interface ListProps extends TableProps<Project> {
   users: User[];

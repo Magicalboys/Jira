@@ -9,6 +9,7 @@ import { http } from "./../utils/http";
 import { useMount } from "./../utils/index";
 import { useAsync } from "./../utils/useAsync";
 import { FullPageLoading } from "../components/lib";
+import { useQueryClient } from "react-query";
 
 interface Authfrom {
   username: string;
@@ -62,8 +63,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = (form: Authfrom) => auth.register(form).then(setUser);
 
+  const queryClient = useQueryClient();
+
   // auth.logout() 是async异步函数 所以可以使用 then,重置user信息
-  const logout = () => auth.logout().then(() => setUser(null));
+  const logout = () =>
+    auth.logout().then(() => {
+      setUser(null);
+      queryClient.clear();
+    });
 
   // 当页面加载时初始化 User
   useMount(() => {

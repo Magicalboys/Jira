@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { QueryKey, useQuery } from "react-query";
 import { useMutation, useQueryClient } from "react-query";
-import { Project } from "./../screens/project-list/list";
 import { useHttp } from "./http";
 import { clearnObject } from "./index";
 import { useAsync } from "./useAsync";
@@ -10,6 +9,7 @@ import {
   useDeleteConfig,
   useEditConfig,
 } from "./optimistic-update";
+import { Project } from "../type/project";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();

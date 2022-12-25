@@ -47,7 +47,7 @@ export const useProjectsModel = () => {
 
   // 当返回值较多时，使用对象来传递
   return {
-    projectModalOpen: projectCreate == "true" || Boolean(editingProject),
+    projectModalOpen: projectCreate == "true" || Boolean(editingProjectId),
     open,
     close,
     startEdit,
