@@ -45,10 +45,9 @@ ProjectListScreen.whyDidYouRender = false;
 const Container = styled.div`
   padding: 3.2rem;
 `;
-const Title = styled.h1`
+export const Title = styled.h1`
   width: 5em;
   height: 1.7em;
-
   line-height: 1.7em;
   text-align: center;
   border-radius: 0.5em;
