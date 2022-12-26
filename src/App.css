@@ -10,6 +10,7 @@ html {
 html body #root .App {
   height: 100vh;
   background-color: #fff;
-  background: url(./assets/images/background.png) no-repeat;
+  background-repeat: repeat-y;
+  background: url(./assets/images/background.png);
   background-size: 100% 100%;
 }

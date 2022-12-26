@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Route, Routes, Navigate } from "react-router-dom";
-import { KanbanScreen } from "./KanbanScreen";
-import { TaskScreen } from "./TaskScreen";
+import { KanbanScreen } from "../kanban";
+import { TaskScreen } from "../expic";
 export const ProjectScreen = () => {
   return (
     <div>
