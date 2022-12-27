@@ -65,14 +65,17 @@ const Aside = styled(Menu)`
 const Main = styled.div`
   margin-left: 2rem;
   display: flex;
+  overflow-x: scroll;
 `;
 const Container = styled.div`
   display: flex;
+  height: 640px;
+
   justify-content: center;
 `;
 const Box = styled.div`
   display: flex;
-  width: 105rem;
+  width: 131rem;
   margin-top: 2rem;
   border-radius: 3rem;
   background: white;

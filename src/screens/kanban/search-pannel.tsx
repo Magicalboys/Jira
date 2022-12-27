@@ -25,7 +25,7 @@ export const SearchPanel = () => {
     <Row marginBottom={4} gap={true}>
       <MyInput
         style={{ width: "20rem" }}
-        placeholder={"人物名"}
+        placeholder={"任务名"}
         value={searchParams.name}
         onChange={(evt) => setSearchParam({ name: evt.target.value })}
       />

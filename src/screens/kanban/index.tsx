@@ -12,6 +12,7 @@ import { SearchPanel } from "./search-pannel";
 import { Title } from "../project-list";
 import { useTasks } from "./../../utils/task";
 import { Spin } from "antd";
+import { CreateKanban } from "./create-kanban";
 
 export const KanbanScreen = () => {
   useDocumentTitle("看板列表");
@@ -39,15 +40,16 @@ export const KanbanScreen = () => {
           {kanbans?.map((kanban) => (
             <KanbanColumn kanban={kanban} key={kanban.id} />
           ))}
+          <CreateKanban />
         </ColumnContainer>
       )}
     </div>
   );
 };
-const ColumnContainer = styled.div`
+export const ColumnContainer = styled.div`
   display: flex;
-  overflow: hidden;
   margin-right: 4rem;
+  overflow-y: scroll;
 `;
 const MySpin = styled(Spin)`
   display: flex;
