@@ -13,6 +13,7 @@ import { Title } from "../project-list";
 import { useTasks } from "./../../utils/task";
 import { Spin } from "antd";
 import { CreateKanban } from "./create-kanban";
+import { TaskModal } from "./task-modal";
 
 export const KanbanScreen = () => {
   useDocumentTitle("看板列表");
@@ -43,6 +44,7 @@ export const KanbanScreen = () => {
           <CreateKanban />
         </ColumnContainer>
       )}
+      <TaskModal />
     </div>
   );
 };

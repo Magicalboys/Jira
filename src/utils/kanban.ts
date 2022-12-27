@@ -2,7 +2,7 @@ import { QueryKey, useMutation, useQuery } from "react-query";
 import { Kanban } from "../type/kanban";
 import { Project } from "../type/project";
 import { useHttp } from "./http";
-import { useAddConfig } from "./optimistic-update";
+import { useAddConfig, useDeleteConfig } from "./optimistic-update";
 // 获取 kanban 列表的 hook
 
 export const useKanbans = (param?: Partial<Kanban>) => {
@@ -24,5 +24,17 @@ export const useAddKanban = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useAddConfig(queryKey)
+  );
+};
+
+export const useDeleteKanban = (queryKey: QueryKey) => {
+  const client = useHttp();
+
+  return useMutation(
+    ({ id }: { id: number }) =>
+      client(`kanbans/${id}`, {
+        method: "DELETE",
+      }),
+    useDeleteConfig(queryKey)
   );
 };

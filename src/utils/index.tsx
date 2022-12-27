@@ -32,7 +32,7 @@ export const useMount = (callback: () => void) => {
 };
 
 //3.通过自定义hook实现Debounce
-export const useDebounce = <V,>(value: V, delay?: number): V => {
+export const useDebounce = <V,>(value: V, delay?: number) => {
   // 为value 设置一个新的状态，改变其更新频率
   const [deboucedValue, setDebouncedValue] = useState(value);
 

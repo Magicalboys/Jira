@@ -1,7 +1,9 @@
 import { useLocation } from "react-router";
 import { useProject } from "./../../utils/project";
 import { useUrlQueryParam } from "./../../utils/url";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import { useTask } from "../../utils/task";
+import { useDebounce } from "./../../utils/index";
 
 export const useProjectIdInUrl = () => {
   // 取出URL
@@ -9,7 +11,6 @@ export const useProjectIdInUrl = () => {
   // 用正常表达式找出 URL 中的 id
   const id = pathname.match(/projects\/(\d+)/)?.[1];
   // 将字符串中的 id 转换为 数字 id
-  console.log(id);
   return Number(id);
 };
 
@@ -26,6 +27,8 @@ export const useTasksSearchParams = () => {
     "processorId",
     "tagId",
   ]);
+  const debouncedName = useDebounce(param.name, 200);
+
   const projectId = useProjectIdInUrl();
   return useMemo(
     () => ({
@@ -40,3 +43,30 @@ export const useTasksSearchParams = () => {
 };
 
 export const useTaskQueryKey = () => ["tasks", useTasksSearchParams()];
+
+export const useTasksModal = () => {
+  const [{ editingTaskId }, setEditingTaskId] = useUrlQueryParam([
+    "editingTaskId",
+  ]);
+
+  const { data: editingTask, isLoading } = useTask(Number(editingTaskId));
+
+  const startEdit = useCallback(
+    (id: number) => {
+      setEditingTaskId({ editingTaskId: id });
+    },
+    [setEditingTaskId]
+  );
+
+  const close = useCallback(() => {
+    setEditingTaskId({ editingTaskId: "" });
+  }, [setEditingTaskId]);
+
+  return {
+    editingTaskId,
+    editingTask,
+    startEdit,
+    close,
+    isLoading,
+  };
+};

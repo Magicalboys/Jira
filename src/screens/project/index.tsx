@@ -24,7 +24,7 @@ export const ProjectScreen = () => {
         {/* 指定选中的菜单 */}
         <Aside selectedKeys={[routeType]}>
           <MenuItem key={"kanban"}>
-            <Link to={"kanban"}>看板子</Link>
+            <Link to={"kanban"}>看板</Link>
           </MenuItem>
           <MenuItem key={"task"}>
             <Link to={"task"}>任务组</Link>
